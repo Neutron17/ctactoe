@@ -4,12 +4,24 @@
 #ifndef NULL
 #define NULL ((void*)0)
 #endif
-#include <stdio.h>
-unsigned randTo(unsigned n);
-unsigned short shRandTo(unsigned short n);
-char *readLine(const char *prompt);
-char *nReadLine(const char *prompt, int n);
-int readInt(const char *prompt);
-#include <stdbool.h>
-bool isFileEmpty(FILE *fptr);
+
+#define STDIN_NO	0
+#define STDOUT_NO	1
+#define STDERR_NO	2
+
+#define bool unsigned char
+#define true 1
+#define false 0
+#define time_t int
+
+extern int write(int fd, const char *buff, unsigned long n);
+extern int read(int fd, const char *buff, unsigned long n);
+extern int time(time_t *tloc);
+__attribute__((noreturn))
+extern void exit(int rev);
+
+void srand(unsigned s);
+int randTo(unsigned n);
+int rand();
 #endif // _NTR_UTILS_H_
+

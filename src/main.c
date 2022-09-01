@@ -1,9 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <errno.h>
-#include <signal.h>
-#include "color.h"
+#include "utils.h"
 #include "board.h"
 #include "input.h"
 
@@ -13,76 +8,58 @@ void parseArgs(int argc, char *argv[]);
 void handler(int signal);
 
 int main(int argc, char *argv[]) {
-    errno = 0;
-	signal(SIGINT, handler);
+	srand(time(NULL));
 	parseArgs(argc, argv);
-    volatile bool running = true;
-    char board[3][3] = {
-        {' ', ' ', ' '},
-        {' ', ' ', ' '},
-        {' ', ' ', ' '}
-    };
-    // FILE *fptr = fopen("config.conf", "r+b");
-    // if(fptr == NULL) return EXIT_FAILURE;
-    // if(isFileEmpty(fptr)) {
-    //     fptr = fopen("config.conf", "wb+");
-    //     if(fptr == NULL) return EXIT_FAILURE;
-    //     //login();
-    //     fwrite(board, sizeof(board), 1, fptr);
-    // }else{
-    //     fread(board, sizeof(board), 1, fptr);
-    //     fclose(fptr);
-    // }
+	volatile bool running = true;
+	char board[3][3] = {
+		{' ', ' ', ' '},
+		{' ', ' ', ' '},
+		{' ', ' ', ' '}
+	};
 
-    Player pl = User;
-    if(mode == PvC) {
-        Player winner;
-        while(running) {
-            if(isBoardFull(&board[0][0])) {
-                printBoard(board);
-                printf("DRAW: Board is full\n");
-            	if(checkWinner(board) != None) {
-                    goto win;
-            	}
-                return 0;
-            }
-            if (pl == User) {
-                printBoard(board);
-                if (handleInput(getInput(), &board[0][0], pl)) {
-                    fprintf(stderr, "Invalid input\n");
-                    continue;
-                }
-            }else{
-                compMove(&board[0][0]);
-            }
-            if(pl) pl--;
-            else pl++;
-        win:
-            if((winner = checkWinner(board)) != None) {
-                printBoard(board);
-                if(winner == User) {
-                    printf("You won\n");
-                }else{
-                    printf("You lost\n");
-                }
-                printf("Game Over\n");
-                return 0;
-            }
-        }
-    }else if(mode == PvP) {
-        KILL();
-    }
-    return 0;
+	Player pl = User;
+	if(mode == PvC) {
+		Player winner;
+		while(running) {
+			if(isBoardFull(&board[0][0])) {
+				printBoard(*board);
+				write(STDOUT_NO, "DRAW\n", 5);
+				if(checkWinner(*board) != None) {
+					goto win;
+				}
+				return 0;
+			}
+			if (pl == User) {
+				printBoard(*board);
+				if (handleInput(getInput(), *board, pl)) {
+					write(STDOUT_NO, "\n", 1);
+					write(STDERR_NO, "Invalid input\n", 14);
+					continue;
+				}
+			} else {
+				compMove(&board[0][0]);
+			}
+			if(pl) pl--;
+			else pl++;
+win:
+			if((winner = checkWinner(*board)) != None) {
+				printBoard(*board);
+				if(winner == User) {
+					write(STDOUT_NO, "You won\n", 8);
+				}else{
+					write(STDOUT_NO, "You lost\n", 9);
+				}
+				write(STDOUT_NO, "Game Over\n", 10);
+				return 0;
+			}
+		}
+	}else if(mode == PvP) {
+		exit(2);
+	}
+	return 0;
 }
 void parseArgs(int argc, char *argv[]) {
-    if(argc != 1) {
-        fcprintf(stderr, Yellow,
-	"Warning: Unimplemented feature: Arguments\n");
-    }
+	if(argc != 1) {
+	}
 }
 
-void handler(int signal) {
-	// TODO Are you sure question
-	cprintf(Red, "Signal: %d\n", signal);
-    KILL();
-}
