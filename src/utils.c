@@ -1,5 +1,7 @@
 #include "utils.h"
 
+// Source: musl libc
+
 static unsigned long seed;
 
 void srand(unsigned s) {
