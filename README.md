@@ -1,4 +1,4 @@
-# TicTacToe in C without stdlib in 4KBs
+# TicTacToe in C without stdlib in 1.75 KBs
 
 ## How
 
@@ -10,7 +10,7 @@ I only use these syscalls:
 
 they are defined in the ```start.S``` assembly file
 
-The result is an 4Kb executable
+The result is an 1.75 Kb executable
 
 ## Install
 
