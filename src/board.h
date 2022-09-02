@@ -4,21 +4,22 @@
 #define compIcon 'X'
 #define bool unsigned char
 
-typedef enum {
+enum Player {
 	User,
 	Computer,
 	None
-} Player;
+};
 
-typedef enum {
+enum Mode {
 	PvC,
 	PvP
-} Mode;
+};
 
-void printBoard(const char *board);
-void compMove(char* board);
-bool isPlaceUsed(const char *board, unsigned short index);
-bool isBoardFull(const char *board);
-Player checkWinner(const char *board);
+void printBoard(const char *restrict board);
+void compMove(char *restrict board);
+bool isPlaceUsed(const char *restrict board, unsigned short index);
+bool isBoardFull(const char *restrict board);
+enum Player checkWinner(const char *board);
+
 #endif
 

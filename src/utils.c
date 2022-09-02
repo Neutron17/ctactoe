@@ -1,16 +1,16 @@
 #include "utils.h"
 
-// Source: musl libc
-
 static unsigned long seed;
 
 void srand(unsigned s) {
 	seed = s-1;
 }
 
+// source: ISO/IEC 9899
+//static const unsigned foo = (1103515245 + 12345) % (1 << 31);
 int rand() {
-	seed = 6364136223846793005ULL*seed + 1;
-	return seed>>33;
+	seed = 1103515245 * seed + 12345;
+	return seed >> 17;
 }
 
 int randTo(unsigned n) {

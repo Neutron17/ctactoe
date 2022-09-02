@@ -14,14 +14,15 @@
 #define false 0
 #define time_t int
 
-extern int write(int fd, const char *buff, unsigned long n);
-extern int read(int fd, const char *buff, unsigned long n);
+extern int read(int fd, const void *buff, unsigned long n);
+extern int write(int fd, const void *buff, unsigned long n);
 extern int time(time_t *tloc);
 __attribute__((noreturn))
 extern void exit(int rev);
 
 void srand(unsigned s);
 int randTo(unsigned n);
-int rand();
+int rand(void);
+
 #endif // _NTR_UTILS_H_
 

@@ -2,7 +2,7 @@
 
 #include "utils.h"
 
-int getInput() {
+int getInput(void) {
 	write(STDOUT_NO, "Index: ", 7);
 	char inp[2];
 	read(STDIN_NO, inp, 2);
@@ -10,7 +10,7 @@ int getInput() {
 	return opt;
 }
 
-bool handleInput(int inp, char* board, Player pl) {
+bool handleInput(int inp, char *restrict board, enum Player pl) {
 	if (inp < 1 || inp > 9)
 		return true;
 	if(isPlaceUsed(board, inp-1))

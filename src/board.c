@@ -1,7 +1,7 @@
 #include "utils.h"
 #include "board.h"
 
-void printBoard(const char *board) {
+void printBoard(const char *restrict board) {
 	for (char y = 0; y < 3; y++) {
 		for (char x = 0; x < 3; x++) {
 			write(STDOUT_NO, &board[x+y*3], 1);
@@ -16,19 +16,19 @@ void printBoard(const char *board) {
 	}
 }
 
-void compMove(char *board) {
+void compMove(char *restrict board) {
 	unsigned short x = randTo(8);
 	while (x >= 8 || isPlaceUsed(board, x)) {
 		x = randTo(8);
 	}
 	*(board + x) = 'X';
 }
-bool isPlaceUsed(const char *board, unsigned short index) {
+bool isPlaceUsed(const char *restrict board, unsigned short index) {
 	if (*(board + index) != ' ')
 		return true;
 	return false;
 }
-bool isBoardFull(const char *board) {
+bool isBoardFull(const char *restrict board) {
 	for (short i = 0; i < 9; i++) {
 		if (*(board + i) == ' ')
 			return false;
@@ -36,7 +36,7 @@ bool isBoardFull(const char *board) {
 	return true;
 }
 
-char posLUT[8][3][2] = {
+const static char posLUT[8][3][2] = {
 	{ {0,0}, {0,1}, {0,2} },
 	{ {1,0}, {1,1}, {1,2} },
 	{ {2,0}, {2,1}, {2,2} },
@@ -49,9 +49,9 @@ char posLUT[8][3][2] = {
 	{ {0,2}, {1,1}, {2,2} },
 };
 
-Player checkWinner(const char *board) {
+enum Player checkWinner(const char *restrict board) {
 	char icon = userIcon;
-	Player ret = User;
+	enum Player ret = User;
 	bool done = false;
 top:;
 	for(int pos = 0; pos < 8; pos++) {

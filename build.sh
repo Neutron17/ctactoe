@@ -20,7 +20,6 @@ gcc \
 	src/start.S src/*.c \
 	-o build/c -ggdb
 
-
-
 strip -R .comment build/c
+#strip --strip-all build/c
 

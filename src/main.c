@@ -2,12 +2,12 @@
 #include "board.h"
 #include "input.h"
 
-Mode mode = PvC;
-
-void parseArgs(int argc, char *argv[]);
+void parseArgs(int argc, const char *argv[]);
 void handler(int signal);
 
-int main(int argc, char *argv[]) {
+int main(int argc, const char *argv[]) {
+	const enum Mode mode = PvC;
+
 	srand(time(NULL));
 	parseArgs(argc, argv);
 	volatile bool running = true;
@@ -17,11 +17,11 @@ int main(int argc, char *argv[]) {
 		{' ', ' ', ' '}
 	};
 
-	Player pl = User;
+	enum Player pl = User;
 	if(mode == PvC) {
-		Player winner;
+		enum Player winner;
 		while(running) {
-			if(isBoardFull(&board[0][0])) {
+			if(isBoardFull(*board)) {
 				printBoard(*board);
 				write(STDOUT_NO, "DRAW\n", 5);
 				if(checkWinner(*board) != None) {
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 					continue;
 				}
 			} else {
-				compMove(&board[0][0]);
+				compMove(*board);
 			}
 			if(pl) pl--;
 			else pl++;
@@ -58,7 +58,7 @@ win:
 	}
 	return 0;
 }
-void parseArgs(int argc, char *argv[]) {
+void parseArgs(int argc, const char *argv[]) {
 	if(argc != 1) {
 	}
 }

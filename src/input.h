@@ -3,7 +3,8 @@
 
 #include "board.h"
 // return value -> true = failure, false = success
-bool handleInput(int inp, char *board, Player pl);
-int getInput();
+bool handleInput(int inp, char *restrict board, enum Player pl);
+int getInput(void);
+
 #endif
 
