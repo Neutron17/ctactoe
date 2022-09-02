@@ -1,8 +1,5 @@
 #/bin/sh
 
-#gcc -nostartfiles -ggdb src/*.S src/*.c -o build/c
-#exit
-
 gcc \
 	-Wall -pedantic -lpthread \
 	-nostdlib \
@@ -18,8 +15,8 @@ gcc \
 	-Wl,--build-id=none \
 	-nostartfiles \
 	src/start.S src/*.c \
-	-o build/c -ggdb
+	-o build/ctactoe -ggdb
 
-strip -R .comment build/c
+strip -R .comment build/ctactoe
 #strip --strip-all build/c
 

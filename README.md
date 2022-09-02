@@ -31,11 +31,11 @@ make build
 Global install:
 
 ```
-tictactoe
+ctactoe
 ```
 
 ```build/``` folder
 
 ```
-./build/tictactoe
+./build/ctactoe
 ```
