@@ -17,7 +17,7 @@ The result is an 1.75 Kb executable
 Globally:
 
 ```
-sudo make Install
+sudo make install
 ```
 
 Inside ```build/```
